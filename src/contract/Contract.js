@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Mint } from "./Mint";
+import { Approve } from "./Approve";
 
 export function Contract({contract, account}) {
   const [name, setName] = useState();
@@ -29,6 +30,7 @@ export function Contract({contract, account}) {
       <div>Account : <b>{account}</b></div>
     </div>
     <Mint contract={contract} />
+    <Approve contract={contract} />
     </>
   );
 }

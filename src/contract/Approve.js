@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 
-export function Mint({contract}) {
+export function Approve({contract}) {
   const [to, setTo] = useState("");
-  const [hash, setHash] = useState("");
+  const [tokenId, setTokenId] = useState("");
 
   const handleClick = async () => {
-    const tx = await contract.mint(to, hash);
+    let _tokenId = parseInt(tokenId);
+    if(_tokenId < 1) return;
+    const tx = await contract.approve(to, _tokenId);
     const receipt = await tx.wait();
     receipt.status === 0 && console.log("Transaction failed");
-    window.dispatchEvent(new CustomEvent("balanceChanged"));
     setTo("");
-    setHash("");
+    setTokenId("");
   }
 
   return (
@@ -22,11 +23,11 @@ export function Mint({contract}) {
       </div>
       <div className="form-group">
         <input className="form-control" type="text"
-          onChange={e => setHash(e.target.value)}
-          value={hash} placeholder="Hash..." required />
+          onChange={e => setTokenId(e.target.value)}
+          value={tokenId} placeholder="Token ID..." required />
       </div>
       <button className="btn btn-primary" onClick={handleClick}>
-        Mint
+        Approve
       </button>
     </div>
   );
